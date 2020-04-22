@@ -1,0 +1,20 @@
+Punch Out Notes
+
+Variables:
+
+FoeHealth 		00-60 (hex) Foe Stamina 0 = Knockdown
+FoeRdKO			0-3   How many times the opponent has been knocked down in the current round
+FoeTotKO		0-7   How many time  the opponent has been knocked down in the match.
+Hearts		      	Number of hearts showing on the screen, when it reaches 0 you are tired
+MacDocSplashFlag 	0,1   1 when inbetween rounds and doc is encouraging you 
+OppUpOrDown		0,1   1 when opponent is knocked down
+Opponent		0-F?  0 = Glass Joe, 1= Vok Kaiser,.... etc opponent flag
+InAFightFlag		0,1   0 If you are in a fight, 1 otherwise
+PlayerHealth		00-60 (hex) Little Mac Stamina, 0 = knockdown
+PlayerRd1KO		0-3   How many times little mac has been knocked down in rd 1
+PlayerRd2KO		0-3   How many times little mac has been knocked down in rd 2
+PlayerRd3KO		0-3   How many times little mac has been knocked down in rd 3
+PlayerTotKO		0-7   How many times little mac has been knocked down in the match
+Round			0-3   Current match round
+Score			0-??  Current score displayed on the screen, this may need more work
+Stars			0-??  Current star count for available super punches

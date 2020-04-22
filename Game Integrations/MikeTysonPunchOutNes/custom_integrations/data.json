@@ -1,0 +1,68 @@
+{
+  "info": {
+    "FoeHealth": {
+      "address": 920,
+      "type": "=u1"
+    },
+    "FoeRdKO": {
+      "address": 970,
+      "type": "=u1"
+    },
+    "FoeTotKO": {
+      "address": 977,
+      "type": "=u1"
+    },
+    "Hearts": {
+      "address": 801,
+      "type": ">n4"
+    },
+    "InAFightFlag": {
+      "address": 28,
+      "type": "=u1"
+    },
+    "MacDocSplashFlag": {
+      "address": 18,
+      "type": "=u1"
+    },
+    "OppUpOrDown": {
+      "address": 5,
+      "type": "=u1"
+    },
+    "Opponent": {
+      "address": 1,
+      "type": "=u1"
+    },
+    "PlayerHealth": {
+      "address": 913,
+      "type": "=u1"
+    },
+    "PlayerRd1KO": {
+      "address": 989,
+      "type": "=u1"
+    },
+    "PlayerRd2KO": {
+      "address": 990,
+      "type": "=u1"
+    },
+    "PlayerRd3KO": {
+      "address": 991,
+      "type": "=u1"
+    },
+    "PlayerTotKO": {
+      "address": 976,
+      "type": "=u1"
+    },
+    "Round": {
+      "address": 6,
+      "type": "=u1"
+    },
+    "Score": {
+      "address": 1002,
+      "type": ">n4"
+    },
+    "Stars": {
+      "address": 834,
+      "type": "=u1"
+    }
+  }
+}

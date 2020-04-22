@@ -1,0 +1,47 @@
+{
+  "crop": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "done": {
+    "variables": {
+      "FoeRdKO": {
+        "op": "equal",
+        "reference": 3
+      },
+      "MacDocSplashFlag": {
+        "op": "not-equal"
+      },
+      "PlayerHealth": {
+        "op": "equal"
+      },
+      "PlayerRd1KO": {
+        "op": "nonzero"
+      }
+    }
+  },
+  "reward": {
+    "variables": {
+      "FoeHealth": {
+        "reward": 1.0
+      },
+      "FoeRdKO": {
+        "reward": 5000.0
+      },
+      "Hearts": {
+        "penalty": 0.009999999776482582
+      },
+      "Opponent": {
+        "reward": 200000.0
+      },
+      "PlayerHealth": {
+        "penalty": 1.0
+      },
+      "Score": {
+        "reward": 1.0
+      }
+    }
+  }
+}
