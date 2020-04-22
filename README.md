@@ -8,3 +8,5 @@ There are many games which are already integrated for the environment. However, 
 is most interesting to attempt to integrate is PunchOut (c) or Mike Tysons Punchout (c). An attempt will be
 made through observation of the variables while playing the game on a special platform to get information
 necessary to build an interface as prescribed in the gym-retro documentation.
+
+Variables will be documented along the way, as well as integration material for the environment. 
