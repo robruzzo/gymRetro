@@ -10,11 +10,11 @@ class Worker(object):
         self.genome=genome
         self.config=config
         self.game='MikeTysonsPunchout-Nes'
-        self.state='GlassJoeStart'
+        self.state='KingHippoSplash'
         
     def work(self):
         #create an environment
-        self.env=retro.make(self.game,self.state,inttype=retro.data.Integrations.CONTRIB)
+        self.env=retro.make(self.game, self.state, inttype=retro.data.Integrations.CONTRIB,use_restricted_actions=retro.Actions.ALL)
         #Reset the environment
         ob=self.env.reset()
         ac = self.env.action_space.sample()
@@ -32,28 +32,34 @@ class Worker(object):
         frame=0
         counter=0
         done = False
-        xpos_hi=0
-        xpos_hi_max=0
-        xpos_low_max=0
-
+        macDoc=1
+        foeRdKOCurrent=0
         while not done:
-            #env.render()
             frame+=1
             ob = cv2.resize(ob, (inx,iny))
             ob = cv2.cvtColor(ob,cv2.COLOR_BGR2GRAY)
             ob = np.reshape(ob,(inx,iny))
+            
             imgarray=np.ndarray.flatten(ob)
 
-    
-            #get the output of the neural network
-            nnOutput = net.activate(imgarray)
+            if macDoc==1:
+                nnOutput=[0,0,0,1,0,0,0,0,0]
+                self.env.step(nnOutput)
+            else:
+                nnOutput = net.activate(imgarray)
             #print("Network Output",nnOutput)
-            #step the environment and receive the output for use in the fitness functions
             ob,rew,done,info = self.env.step(nnOutput)
+            foeKO=info['FoeTotKO']
+            macDoc=info["MacDocSplashFlag"]
+            
             fitness_current+=rew
+
+            if foeKO>foeRdKOCurrent:
+                foeRdKOCurrent=foeKO
+                fitness_current+=500
+
             if done:
                 done = True
-                #print(genome_id, fitness_current)
             self.genome.fitness= fitness_current
         return self.genome.fitness
 
@@ -66,23 +72,26 @@ config = neat.Config(neat.DefaultGenome,neat.DefaultReproduction,
                      'config-feedforward')
 
 if __name__ == '__main__':
+    
     game='MikeTysonsPunchout-Nes'
-    state='GlassJoeStart'
+    state='KingHippoSplash'
     #Set up a population using a prior checkpoint
-    p=neat.Checkpointer.restore_checkpoint("neat-checkpoint-107")
+    #p=neat.Checkpointer.restore_checkpoint("neat-checkpoint-158")
     #set up population using the config parameters
-    #p = neat.Population(config)
+    p = neat.Population(config)
     #make stats reporter
     p.add_reporter(neat.StdOutReporter(True))
     stats= neat.StatisticsReporter()
     p.add_reporter(stats)
     #every 10 generations save checkpoint
-    p.add_reporter(neat.Checkpointer(20))
+    p.add_reporter(neat.Checkpointer(100))
 
     pe=neat.ParallelEvaluator(20,eval_genomes)
 
     #When the state is complete, save the winning genome
     winner = p.run(pe.evaluate)
 
-    with open(game+'.pkl', 'wb') as output:
+    with open(game+'-'+state+'.pkl', 'wb') as output:
         pickle.dump(winner, output, 1)
+
+#C:\Users\robru\Documents\Python Scripts\gymRetro\Game Integrations\MikeTysonPunchOutNes

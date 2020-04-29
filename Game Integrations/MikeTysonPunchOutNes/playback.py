@@ -5,9 +5,9 @@ import neat
 import pickle
 
 game='MikeTysonsPunchout-Nes'
-state='GlassJoeStart'
+state='PistonHondaSplash'
 inttype=retro.data.Integrations.CONTRIB
-env = retro.make(game, state,inttype, record='.')
+env = retro.make(game, state,inttype,use_restricted_actions=retro.Actions.ALL ,record='.')
 
 
 imgarray = []
@@ -27,8 +27,8 @@ p.add_reporter(neat.StdOutReporter(True))
 stats = neat.StatisticsReporter()
 p.add_reporter(stats)
 
-
-with open('MikeTysonsPunchout-Nes.pkl', 'rb') as input_file:
+file = game+'-'+state+'.pkl'
+with open(file, 'rb') as input_file:
     genome = pickle.load(input_file)
 
 
@@ -42,36 +42,49 @@ iny = int(iny/8)
 
 net = neat.nn.recurrent.RecurrentNetwork.create(genome, config)
 
-current_max_fitness = 0
-fitness_current = 0
-frame = 0
-counter = 0
-xpos = 0
-xpos_max = 0
-
+current_max_fitness =0
+fitness_current=0
+frame=0
+counter=0
 done = False
+foeRdKOCurrent=0
+macDoc=1
 
 while not done:
-    
-    env.render()
-    frame += 1
+            #render the window to see whats going on in the game, not necessary
+            env.render()
+            frame+=1
+            #uncomment one to see what the network input will be
+            #scaledimg = cv2.cvtColor(ob,cv2.COLOR_BGR2RGB)
+            #scaledimg = cv2.cvtColor(ob,cv2.COLOR_BGR2GRAY)
+            #scaledimg = cv2.resize(scaledimg, (iny,inx))
+            ob = cv2.resize(ob, (inx,iny))
+            ob = cv2.cvtColor(ob, cv2.COLOR_BGR2GRAY)
+            ob = np.reshape(ob,(inx,iny))
+            #uncomment both with one above to see the network input
+            #cv2.imshow('main',scaledimg)
+            #cv2.waitKey(1)
+            
+            imgarray=np.ndarray.flatten(ob)
+            
+            if macDoc==1:
+                nnOutput=[0,0,0,1,0,0,0,0,0]
+                env.step(nnOutput)
+            else:
+                nnOutput = net.activate(imgarray)
+            #print("Network Output",nnOutput)
+            ob,rew,done,info = env.step(nnOutput)
+            foeKO=info['FoeRdKO']
+            macDoc=info["MacDocSplashFlag"]
 
-    ob = cv2.resize(ob, (inx, iny))
-    ob = cv2.cvtColor(ob, cv2.COLOR_BGR2GRAY)
-    ob = np.reshape(ob, (inx,iny))
+            fitness_current+=rew
 
-    for x in ob:
-        for y in x:
-            imgarray.append(y)
-    
-    nnOutput = net.activate(imgarray)
-    
-    ob, rew, done, info = env.step(nnOutput)
-    imgarray.clear()
-    
-    fitness_current+=rew
-    if done:
-        done = True 
-        genome.fitness= fitness_current
+            if foeKO>foeRdKOCurrent:
+                foeRdKOCurrent=foeKO
+                fitness_current+=500
 
+            if done:
+                done = True
+                #print(genome_id, fitness_current)
+            genome.fitness= fitness_current
 #python -m retro.scripts.playback_movie MikeTysonsPunchout-Nes-GlassJoeStart-000000.bk2
