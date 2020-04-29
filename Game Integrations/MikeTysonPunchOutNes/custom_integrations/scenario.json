@@ -7,18 +7,15 @@
   ],
   "done": {
     "variables": {
-      "FoeRdKO": {
-        "op": "equal",
-        "reference": 3
-      },
-      "MacDocSplashFlag": {
-        "op": "not-equal"
+      "Opponent": {
+        "measurement": "delta",
+        "op": "positive"
       },
       "PlayerHealth": {
         "op": "equal"
       },
-      "PlayerRd1KO": {
-        "op": "nonzero"
+      "PlayerTotKO": {
+        "op": "greater-than"
       }
     }
   },
@@ -32,6 +29,9 @@
       },
       "Hearts": {
         "penalty": 0.009999999776482582
+      },
+      "MacDocSplashFlag": {
+        "penalty": 1.0
       },
       "Opponent": {
         "reward": 200000.0

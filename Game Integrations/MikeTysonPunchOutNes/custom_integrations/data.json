@@ -16,6 +16,10 @@
       "address": 801,
       "type": ">n4"
     },
+    "HitLast": {
+      "address": 978,
+      "type": "=u1"
+    },
     "InAFightFlag": {
       "address": 28,
       "type": "=u1"
