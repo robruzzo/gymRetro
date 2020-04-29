@@ -10,3 +10,12 @@ made through observation of the variables while playing the game on a special pl
 necessary to build an interface as prescribed in the gym-retro documentation.
 
 Variables will be documented along the way, as well as integration material for the environment. 
+
+Integration Useage:
+If using Anaconda, the data must be placed in the /Anaconda3/envs/environment_name/Lib/site-packages/retro/data/contrib/MikeTysonsPunchOut-Nes folder.
+If you have a different installation, you must find the data folder and contrib sub folder.
+My installation is in C:\Users\user_name\Anaconda3\envs\gym-retro\Lib\site-packages\retro\data on Windows 10 using Anaconda.
+gym-retro is the name of my environment.
+
+The rom is not included, and must match the sha of the rom sha file included.
+
