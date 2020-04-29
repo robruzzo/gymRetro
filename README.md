@@ -1,5 +1,5 @@
 # gymRetro
-Reinforcement Learning Reinforcement Research
+Reinforcement Learning Research
 
 This project aims to utilize reinforcement learning methods to teach an agent to play
 retro games. It utilizes gym-retro as the environment to do so. 
